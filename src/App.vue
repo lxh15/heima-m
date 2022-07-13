@@ -1,32 +1,46 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+  <div>
+    <h1>黑马头条</h1>
+    <span class="toutiao toutiao-dianzan2"></span>
+    <div class="login"></div>
+    <!-- <van-form @submit="onSubmit">
+      <van-field
+        v-model="username"
+        name="用户名"
+        label="用户名"
+        placeholder="用户名"
+        :rules="[{ required: true, message: '请填写用户名' }]"
+      />
+      <van-field
+        v-model="password"
+        type="password"
+        name="密码"
+        label="密码"
+        placeholder="密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+      />
+      <div style="margin: 16px">
+        <van-button round block type="info" native-type="submit"
+          >提交</van-button
+        >
+      </div>
+    </van-form> -->
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+export default {
+  data () {
+    return {}
   }
+}
+</script>
+
+<style scoped>
+.login {
+  width: 694px;
+  height: 88px;
+  background-color: #6db4fb;
+  border-radius: 10px;
 }
 </style>
