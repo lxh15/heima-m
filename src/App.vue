@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import request from '@/utlis/request'
+// import request from '@/utlis/request'
 export default {
   data () {
     return {}
-  },
-  created () {
-    console.log(request)
   }
+  // created () {
+  //   console.log(request)
+  // }
 }
 </script>
 
