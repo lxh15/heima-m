@@ -1,4 +1,6 @@
 import request from '@/utlis/request'
+import store from '@/store'
+
 /**
  *登录
  * @param {*} mobile 手机号
@@ -21,5 +23,14 @@ export const sendCode1 = (mobile) => {
   return request({
     method: 'GET',
     url: `/v1_0/sms/codes/${mobile}`
+  })
+}
+
+export const getUserInfo = () => {
+  return request({
+    url: '/v1_0/user',
+    headers: {
+      Authorization: `Bearer ${store.state.user.token}`
+    }
   })
 }

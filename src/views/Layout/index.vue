@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>首页</h1>
+    <!-- <h1>首页</h1> -->
     <router-view></router-view>
-    <van-tabbar v-model="active">
-      <van-tabbar-item to="/">
+    <van-tabbar route>
+      <van-tabbar-item to="/home">
         <template #icon>
           <span class="toutiao toutiao-shouye"></span>
         </template>
@@ -28,7 +28,8 @@
         <template #icon>
           <span class="toutiao toutiao-wode"></span>
         </template>
-        我的
+        <!-- 两个叹号代表把这个表达式转为布尔值 true或者false -->
+        {{ !!$store.state.user.token ? '我的' : '未登录' }}
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -39,7 +40,7 @@ export default {
   name: 'layout',
   data () {
     return {
-      active: 0
+      // active: 0
     }
   }
 }
