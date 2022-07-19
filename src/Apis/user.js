@@ -25,7 +25,10 @@ export const sendCode1 = (mobile) => {
     url: `/v1_0/sms/codes/${mobile}`
   })
 }
-
+/**
+ * 获取用户信息
+ * @returns
+ */
 export const getUserInfo = () => {
   return request({
     url: '/v1_0/user',
