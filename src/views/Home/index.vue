@@ -3,13 +3,15 @@
     <!-- 头部导航 -->
     <van-nav-bar title="标题" class="navbar">
       <template #title>
-        <van-button round><van-icon name="search" />搜索</van-button>
+        <van-button round @click="$router.push('/search')"
+          ><van-icon name="search" />搜索</van-button
+        >
       </template>
     </van-nav-bar>
     <!-- tabs选项卡 -->
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" swipeable>
       <van-tab v-for="item in myChannels" :key="item.id" :title="item.name">
-        <!-- 把id传给服用子组件 -->
+        <!-- 把id传给复用子组件 -->
         <ArticleList :id="item.id"></ArticleList>
       </van-tab>
 
