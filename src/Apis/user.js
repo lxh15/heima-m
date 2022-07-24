@@ -37,3 +37,30 @@ export const getUserInfo = () => {
     }
   })
 }
+
+/**
+ * 关注用户
+ * @param {String || Number} target 关注用户的id
+ * @returns promise
+ */
+export const userFollowing = (target) => {
+  return request({
+    url: '/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+
+/**
+ * 取消关注用户
+ * @param {String || Number} target 取消关注用户的id
+ * @returns promise
+ */
+export const deleteFollow = (target) => {
+  return request({
+    url: `/v1_0/user/followings/${target}`,
+    method: 'DELETE'
+  })
+}

@@ -9,7 +9,7 @@
       </template>
     </van-nav-bar>
     <!-- tabs选项卡 -->
-    <van-tabs v-model="active" swipeable>
+    <van-tabs v-model="active" :swipeable="true">
       <van-tab v-for="item in myChannels" :key="item.id" :title="item.name">
         <!-- 把id传给复用子组件 -->
         <ArticleList :id="item.id"></ArticleList>

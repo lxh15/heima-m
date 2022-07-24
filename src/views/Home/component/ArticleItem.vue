@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="click(articleInfo.art_id)">
     <!-- 没有图片 -->
     <van-cell
       v-if="articleInfo.cover.type === 0"
@@ -53,6 +53,16 @@ export default {
       const art = this.articleInfo
       const time = dayjs(art.pubdate).fromNow() // 转换一下多少年以前
       return `${art.aut_name} ${art.comm_count}评论 ${time}`
+    }
+  },
+  methods: {
+    click (id) {
+      this.$router.push({
+        path: '/detail/' + id
+        // query: {
+        //   id
+        // }
+      })
     }
   }
 }
