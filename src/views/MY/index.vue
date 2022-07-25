@@ -22,8 +22,8 @@
           <!--  -->
           <van-col span="11">
             <van-row class="code-row" type="flex" align="center" justify="end">
-              <van-button class="code-btn" size="mini" round
-                >编辑资料
+              <van-button class="code-btn" size="mini" round @click="userEmit">
+                编辑资料
               </van-button>
             </van-row>
           </van-col>
@@ -143,6 +143,9 @@ export default {
           this.$toast.fail('请重新登录')
         }
       }
+    },
+    userEmit () {
+      this.$router.push('/user')
     }
   }
 }
