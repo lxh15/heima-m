@@ -20,7 +20,7 @@
         <div class="text">
           <div class="name">{{ detailList.aut_name }}</div>
 
-          <div class="time">3年前</div>
+          <div class="time">{{ time }}</div>
         </div>
 
         <!-- 未关注 -->
@@ -47,21 +47,21 @@
     <!-- 文章详情 -->
     <div class="article-container article-detail">
       <!-- 文章内容 -->
-      <div
+      <!-- <div
         class="article-content markdown-body"
         v-html="detailList.content"
-      ></div>
+      ></div> -->
     </div>
 
     <!-- 正文结束 -->
     <div class="hr"><van-divider>正文结束 </van-divider></div>
 
     <!-- 评论区域 -->
-    <commentList></commentList>
+    <CommentList ref="CommentList" :list="commentslist"></CommentList>
 
     <!-- 弹出层 -->
 
-    <Popup ref="popup"></Popup>
+    <Popup ref="popup" :id="id"></Popup>
 
     <!-- 分享 -->
     <van-share-sheet
@@ -77,9 +77,10 @@
       </div>
 
       <div class="right">
-        <div class="icon">
-          <div class="num">0</div>
-          <van-icon name="comment-o" />
+        <div class="icon" @click="focusCommentArea">
+          <van-badge :content="detailList.comm_count" max="99">
+            <van-icon name="comment-o" />
+          </van-badge>
         </div>
         <!-- 收藏 -->
         <div class="icon">
@@ -116,13 +117,17 @@ import {
 import { ImagePreview } from 'vant'
 
 import '@/assets/styles/news.css'
-import commentList from './components/commentList.vue'
+import CommentList from './components/comments.vue'
 import Popup from './components/Popup.vue'
+// 引入dayjs
+import dayjs from '@/utlis/dayjs'
+
 export default {
   data () {
     return {
-      imgAllList: [],
-      detailList: {},
+      commentslist: [], // 评论
+      imgAllList: [], // 图片
+      detailList: {}, // 文章详情
       isFollowed: false, // 关注
       isCollected: false, // 收藏
       isShow: false, // 点赞
@@ -145,8 +150,16 @@ export default {
     }
   },
   components: {
-    commentList,
+    CommentList,
     Popup
+  },
+  computed: {
+    // 时间按格式化
+    time () {
+      const pubdate = this.detailList.pubdate
+      const time = dayjs(pubdate).fromNow()
+      return time
+    }
   },
   created () {
     // 初始获取文章详情
@@ -161,7 +174,7 @@ export default {
       // this.$toast.loading({ message: '加载中...', forbidClick: true })
       const { data } = await getArticlesDetail(this.id)
       this.detailList = data.data
-      console.log(this.detailList)
+      // console.log(this.detailList)
       // 赋值状态
       this.isFollowed = this.detailList.is_followed // 关注
       this.isCollected = this.detailList.is_collected // 收藏
@@ -185,8 +198,17 @@ export default {
     },
     // 获取评论
     async comments () {
-      const res = await comments('a', this.id)
-      console.log(res)
+      try {
+        const { data } = await comments('a', this.id)
+        if (data.data.results.length === 0 || data.data.results === []) {
+          return (this.$refs.CommentList.finished = true)
+        }
+        console.log(data.data.results)
+        this.commentslist = data.data.results
+      } catch (error) {
+        this.$refs.CommentList.error = true
+      }
+      this.$refs.CommentList.loading = false
     },
     // 按钮回退
     back () {
@@ -256,8 +278,15 @@ export default {
         this.$toast.fail('取消点赞失败，请重试')
       }
     },
+    // 点击出现评论区
     showpopup () {
       this.$refs.popup.show = true
+    }, // 点击底部评论图标跳转到评论区位置
+    focusCommentArea () {
+      // const contentEnd = document.querySelector('.hr')
+      // if (contentEnd) {
+      //   contentEnd.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      // }
     }
   }
 }
@@ -372,6 +401,10 @@ main {
       }
     }
   }
+}
+:deep(.van-badge--fixed) {
+  top: 6px;
+  right: 1px;
 }
 
 .article-container {

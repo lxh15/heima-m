@@ -32,16 +32,18 @@ export default {
     }
   },
   props: {
-    id: {
-      type: String,
-      default: ''
-    }
+    comment: { type: Object, default: () => ({}) }
   },
   methods: {
     async releaseFn () {
       try {
+        // console.log(this.comment)
         // 点击发布评论 发布成功关闭弹出层
-        await releaseComment(this.id, this.message)
+        await releaseComment(
+          this.comment.com_id,
+          this.message,
+          this.comment.aut_id
+        )
         this.$toast.success('评论成功')
         this.show = false
       } catch (error) {
