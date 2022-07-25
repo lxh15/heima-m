@@ -63,7 +63,7 @@ export default {
         this.$parent.commentslist.push(...res.data.data.results)
         // console.log(res.data.data.results)
       } catch (error) {
-        this.error = true
+        // this.error = true
       }
       // this.$emit('getcomment')
 

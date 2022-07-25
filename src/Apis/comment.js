@@ -53,3 +53,23 @@ export const commentsReply = (c, source, offset) => {
     }
   })
 }
+
+/**
+ * 评论点赞
+ * @param {String} target 点赞的评论id
+ * @returns promise
+ */
+export const likingComment = (target) => {
+  return request({
+    url: '/v1_0/comment/likings',
+    method: 'POST',
+    data: { target }
+  })
+}
+
+export const noLikingComment = (target) => {
+  return request({
+    url: `/v1_0/comment/likings/${target}`,
+    method: 'DELETE'
+  })
+}

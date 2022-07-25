@@ -78,7 +78,7 @@
 
       <div class="right">
         <div class="icon" @click="focusCommentArea">
-          <van-badge :content="detailList.comm_count" max="99">
+          <van-badge :content="total_count" max="99">
             <van-icon name="comment-o" />
           </van-badge>
         </div>
@@ -133,6 +133,7 @@ export default {
       isShow: false, // 点赞
       id: this.$route.params.id,
       showShare: false, // 分享
+      total_count: 0,
       options: [
         [
           { name: '微信', icon: 'wechat' },
@@ -200,15 +201,17 @@ export default {
     async comments () {
       try {
         const { data } = await comments('a', this.id)
-        if (data.data.results.length === 0 || data.data.results === []) {
-          return (this.$refs.CommentList.finished = true)
-        }
-        console.log(data.data.results)
+        // console.log(data)
+        // if (data.data.results.length === 0 || data.data.results === []) {
+        //   return (this.$refs.CommentList.finished = true)
+        // }
+        this.total_count = data.data.total_count
+        // console.log(data.data.total_count)
         this.commentslist = data.data.results
       } catch (error) {
-        this.$refs.CommentList.error = true
+        // this.$refs.CommentList.error = true
       }
-      this.$refs.CommentList.loading = false
+      // this.$refs.CommentList.loading = false
     },
     // 按钮回退
     back () {
@@ -220,7 +223,7 @@ export default {
       try {
         this.$toast.success('关注')
         this.isFollowed = !this.isFollowed
-        console.log(this.detailList)
+        // console.log(this.detailList)
       } catch (error) {
         this.$toast.fail('关注失败，请重试')
       }
@@ -259,8 +262,8 @@ export default {
     // 点赞
     async likings () {
       try {
-        const res = await likings(this.id)
-        console.log(res)
+        await likings(this.id)
+        // console.log(res)
         this.isShow = !this.isShow
         this.$toast.success('点赞')
       } catch (error) {
@@ -270,8 +273,8 @@ export default {
     // 取消点赞
     async noLikings () {
       try {
-        const res = await noLikings(this.id)
-        console.log(res)
+        await noLikings(this.id)
+        // console.log(res)
         this.isShow = !this.isShow
         this.$toast.success('取消点赞')
       } catch (error) {
@@ -283,10 +286,10 @@ export default {
       this.$refs.popup.show = true
     }, // 点击底部评论图标跳转到评论区位置
     focusCommentArea () {
-      // const contentEnd = document.querySelector('.hr')
-      // if (contentEnd) {
-      //   contentEnd.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      // }
+      const contentEnd = document.querySelector('.hr')
+      if (contentEnd) {
+        contentEnd.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
     }
   }
 }
@@ -403,8 +406,8 @@ main {
   }
 }
 :deep(.van-badge--fixed) {
-  top: 6px;
-  right: 1px;
+  top: 20px;
+  right: 8px;
 }
 
 .article-container {

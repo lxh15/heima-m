@@ -23,6 +23,7 @@
 
 <script>
 import { releaseComment } from '@/Apis'
+// import { comments } from '@/Apis'
 export default {
   name: 'Popup',
   data () {
@@ -44,6 +45,8 @@ export default {
         await releaseComment(this.id, this.message)
         this.$toast.success('评论成功')
         this.show = false
+        this.message = ''
+        this.$parent.comments()
       } catch (error) {
         this.$toast.fail('评论失败，请重试')
       }

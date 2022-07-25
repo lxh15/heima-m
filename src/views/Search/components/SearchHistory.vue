@@ -48,7 +48,7 @@ export default {
     },
     //
     getList (val) {
-      console.log(val)
+      // console.log(val)
       this.$emit('getHistory', val)
       // this.$parent.keywords = val
     }

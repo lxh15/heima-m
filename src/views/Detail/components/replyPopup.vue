@@ -138,7 +138,7 @@ export default {
       try {
         const offset = this.list[this.list.length - 1].com_id
         const { data } = await commentsReply('c', this.comment.com_id, offset)
-        console.log(data.data.results)
+        // console.log(data.data.results)
         // 判断返回的数据是否为空
         if (data.data.results.length === 0 || data.data.results === []) {
           return (this.finished = true)

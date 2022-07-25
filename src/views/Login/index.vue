@@ -73,7 +73,7 @@ export default {
       try {
         // console.log(this.mobile, this.code)
         const res = await login(this.mobile, this.code)
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.$store.commit('setUser', res.data.data)
         this.$router.push('/profile') // 跳转到profile
         this.$toast.success('登录成功') // 成功提示

@@ -20,7 +20,12 @@
           </van-button>
         </p>
       </div>
-      <van-icon slot="right-icon" name="good-job-o">
+      <van-icon
+        slot="right-icon"
+        :class="{ liking: item.is_liking }"
+        name="good-job-o"
+        @click="clickLiking(item)"
+      >
         {{ item.like_count > 0 ? item.like_count : '赞' }}
       </van-icon>
     </van-cell>
@@ -36,7 +41,7 @@
 <script>
 import dayjs from '@/utlis/dayjs'
 import ReplyPopup from './replyPopup.vue'
-import { commentsReply } from '@/Apis'
+import { commentsReply, likingComment, noLikingComment } from '@/Apis'
 export default {
   name: 'commentsitem',
   data () {
@@ -76,9 +81,34 @@ export default {
       if (data.data.results.length === 0 || data.data.results === []) {
         this.$refs.reply.finished = true
       }
+    },
+    // 点赞评论
+    async clickLiking (item) {
+      // console.log(item)
+
+      if (!item.is_liking) {
+        // console.log(typeof 1)
+        await likingComment(item.com_id)
+        // console.log(res)
+        item.like_count++
+        item.is_liking = true
+      } else {
+        await noLikingComment(item.com_id)
+        // console.log(res)
+        item.like_count--
+        item.is_liking = false
+      }
     }
   }
 }
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.liking {
+  &:before {
+    color: #3296fa;
+    font-weight: bold;
+  }
+}
+</style>
+>
